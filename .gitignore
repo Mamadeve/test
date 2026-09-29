@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.scratch/
+*.local
+.DS_Store
+*.tsbuildinfo
+.render-check.cjs
+.tests/*.cjs
+!.tests/ui.test.cjs
+.tests/build/

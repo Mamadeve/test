@@ -1,0 +1,11 @@
+import { Engine } from '../src/sim/engine';
+const e = new Engine();
+const o = e.scenarioOrder({ productIdx: 0, variantIdx: 0, qty: 2 });
+e.runAll(3000);
+console.log('state:', e.state.orders.find(x => x.id === o!.id)!.state);
+console.log('exceptions:', e.state.exceptions.length, JSON.stringify(e.state.exceptions.map(x => x.type)));
+const sku = 'PHX-BLK-256';
+console.log('INV WH-TEH-01:', JSON.stringify(e.state.inv[sku]['WH-TEH-01']));
+const total = (o: any) => Object.values(o).reduce((a: number, b: number) => a + b, 0);
+console.log('SUM per WH:', Object.entries(e.state.inv[sku]).map(([w, c]) => `${w}=${total(c)}`).join(' '));
+console.log('serials:', JSON.stringify(e.state.serials.filter(s => s.sku === sku).reduce<Record<string, number>>((a, s) => { a[s.state] = (a[s.state] ?? 0) + 1; return a; }, {})));

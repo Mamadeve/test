@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دانلود فایل‌های پروژه — شبیه‌ساز</title>
+  <style>
+    body { font-family: Vazirmatn, Tahoma, sans-serif; background: #0b1220; color: #e6edf7;
+           max-width: 640px; margin: 40px auto; padding: 0 16px; }
+    h1 { font-size: 22px; } .sub { color: #8b9bb8; font-size: 13px; margin-bottom: 24px; }
+    .card { display: block; text-decoration: none; color: inherit; background: #121d33;
+            border: 1px solid #24365a; border-radius: 14px; padding: 16px 18px; margin-bottom: 12px;
+            transition: .15s; cursor: pointer; }
+    .card:hover { border-color: #4f8cff; transform: translateY(-1px); }
+    .card b { color: #4f8cff; font-size: 15px; }
+    .card .d { color: #8b9bb8; font-size: 12.5px; margin-top: 6px; }
+    .card .m { color: #34d399; font-size: 12px; margin-top: 8px; display: inline-block; }
+    .card .st { color: #fbbf24; font-size: 12px; margin-inline-start: 10px; }
+    .note { color: #8b9bb8; font-size: 12px; border-top: 1px solid #24365a; margin-top: 24px; padding-top: 14px; }
+    code { background: #121d33; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>📦 دانلود فایل‌های پروژه</h1>
+  <div class="sub">شبیه‌ساز بازارگاه و زنجیره تأمین — بیلد نهایی تست‌شده (۳۴+۹۰+۸۳ سبز)</div>
+
+  <a class="card" data-file="pro-full-project.zip">
+    <b>۱. کل پروژه — pro-full-project.zip</b>
+    <div class="d">کد منبع + تست‌ها + بیلد آماده + راهنمای استقرار (۳۳ فایل)</div>
+    <span class="m">⬇ ۴۷۰ KB</span><span class="st"></span>
+  </a>
+
+  <a class="card" data-file="persian-marketplace-pages.zip">
+    <b>۲. نسخه اجرایی برای کلاد فلر — persian-marketplace-pages.zip</b>
+    <div class="d">برای Cloudflare Pages → Upload assets</div>
+    <span class="m">⬇ ۱۱۲ KB</span><span class="st"></span>
+  </a>
+
+  <a class="card" data-file="persian-marketplace-source.zip">
+    <b>۳. فقط کد منبع — persian-marketplace-source.zip</b>
+    <div class="d">۲۱ فایل source (برای گیت‌هاب / آرشیو)</div>
+    <span class="m">⬇ ۱۱۲ KB</span><span class="st"></span>
+  </a>
+
+  <div class="note">
+    اگر کلیک عادی جواب نداد، همین دکمه‌ها فایل را از همین دامنه واکشی و دانلود می‌کنند.
+    روش پشتیبان: آدرس پیش‌نمایش + <code>/pro-full-project.zip</code> را مستقیم در نوار آدرس مرورگر وارد کنید.
+  </div>
+
+  <script>
+    document.querySelectorAll('.card').forEach(el => {
+      el.addEventListener('click', async (ev) => {
+        ev.preventDefault();
+        const file = el.getAttribute('data-file');
+        const st = el.querySelector('.st');
+        st.textContent = 'در حال آماده‌سازی…';
+        try {
+          const res = await fetch(file, { cache: 'no-store' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = file;
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 30000);
+          st.textContent = '✓ دانلود شد';
+        } catch (e) {
+          st.textContent = 'خطا — لینک مستقیم باز می‌شود';
+          window.open(file, '_blank', 'noopener');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
